@@ -12,38 +12,10 @@ import {
 } from '@/components/ui/carousel';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { products } from '@/data/products';
 
-// Featured products data
-const featuredProducts = [
-  {
-    id: 1,
-    name: 'Premium Multivitamin',
-    description: 'Complete daily nutrition with essential vitamins and minerals.',
-    price: 29.99,
-    image: '/products/multivitamin.jpg'
-  },
-  {
-    id: 2,
-    name: 'Whey Protein Isolate',
-    description: 'High-quality protein for muscle recovery and growth.',
-    price: 49.99,
-    image: '/products/protein.jpg'
-  },
-  {
-    id: 3,
-    name: 'Magnesium Complex',
-    description: 'Essential mineral for nerve and muscle function.',
-    price: 19.99,
-    image: '/products/magnesium.jpg'
-  },
-  {
-    id: 4,
-    name: 'Echinacea Extract',
-    description: 'Natural immune system support.',
-    price: 24.99,
-    image: '/products/echinacea.jpg'
-  }
-];
+// Get featured products (best sellers)
+const featuredProducts = products.filter(product => product.bestSeller);
 
 export default function FeaturedCarousel() {
   return (
@@ -64,9 +36,13 @@ export default function FeaturedCarousel() {
                   <Card className="h-full">
                     <CardHeader>
                       <div className="aspect-square relative bg-muted rounded-md overflow-hidden">
-                        <div className="h-full w-full flex items-center justify-center bg-muted text-muted-foreground">
-                          [Product Image]
-                        </div>
+                        <Image
+                          src={product.imageUrl}
+                          alt={product.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                       </div>
                     </CardHeader>
                     <CardContent>
@@ -74,7 +50,7 @@ export default function FeaturedCarousel() {
                       <p className="text-sm text-muted-foreground">{product.description}</p>
                     </CardContent>
                     <CardFooter className="flex justify-between items-center">
-                      <span className="text-lg font-bold">${product.price}</span>
+                      <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
                       <Button asChild variant="default">
                         <Link href={`/products/${product.id}`}>
                           View Details
