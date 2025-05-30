@@ -102,7 +102,7 @@ export default function CartPage() {
                     <div className="relative w-32 h-32 flex-shrink-0">
                       <div className="absolute inset-0 bg-muted rounded-md">
                         <Image
-                          src={item.image}
+                          src={item.imageUrl}
                           alt={item.name}
                           fill
                           className="object-cover rounded-md"

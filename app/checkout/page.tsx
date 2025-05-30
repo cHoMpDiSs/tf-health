@@ -28,6 +28,7 @@ export default function CheckoutPage() {
   const { toast } = useToast();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [shippingDetails, setShippingDetails] = useState<ShippingDetails>({
     firstName: '',
     lastName: '',
@@ -88,15 +89,12 @@ export default function CheckoutPage() {
         shipping,
         tax,
         total,
-        status: 'confirmed'
+        status: 'ordered'
       };
 
       // Save order to localStorage for demo purposes
       const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
       localStorage.setItem('orders', JSON.stringify([...existingOrders, order]));
-
-      // Clear cart
-      clearCart();
 
       // Show success toast
       toast({
@@ -104,8 +102,11 @@ export default function CheckoutPage() {
         description: "You will be redirected to your receipt.",
       });
 
-      // Ensure we wait for the state updates before redirecting
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Set redirecting state before clearing cart
+      setIsRedirecting(true);
+
+      // Clear cart
+      clearCart();
 
       // Use window.location for a full page navigation
       window.location.href = `/checkout/${orderId}/receipt`;
@@ -116,10 +117,22 @@ export default function CheckoutPage() {
         variant: "destructive",
       });
       setIsProcessing(false);
+      setIsRedirecting(false);
     }
   };
 
-  if (items.length === 0) {
+  if (isRedirecting) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <div className="text-lg">Redirecting to your receipt...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (items.length === 0 && !isRedirecting) {
     router.push('/cart');
     return null;
   }

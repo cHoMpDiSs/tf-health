@@ -1,37 +1,121 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Top Flight Health E-commerce
+
+Top Flight Health is a modern e-commerce platform specializing in premium health supplements and wellness products. Built with Next.js and featuring a clean, user-friendly interface.
+
+## Features
+
+### Shopping Experience
+- **Product Browsing**: Browse through our curated collection of health supplements
+- **Category Filtering**: Filter products by categories (vitamins, proteins, minerals, etc.)
+- **Search**: Search products by name or description
+- **Sorting**: Sort products by various criteria (price, name, best sellers)
+- **Price Filtering**: Filter products by price range
+- **Best Sellers**: Quick access to our most popular products
+
+### Product Details
+- Detailed product information including:
+  - High-quality product images
+  - Comprehensive descriptions
+  - Benefits
+  - Ingredients
+  - Recommended dosage
+  - Package size
+  - Pricing
+
+### Shopping Cart
+- Add/remove products
+- View cart contents
+- Update quantities
+- Clear cart functionality
+- Persistent cart (saves between sessions)
+- Real-time total calculation
+
+### Checkout Process
+- Streamlined checkout experience
+- Shipping information collection
+- Order summary
+- Tax calculation
+- Order confirmation
+
+### Provider Portal (Demo Mode)
+- Secure login system (accepts any email/password for demo purposes)
+- Order management
+- Order status updates
+- Order history viewing
+- Search and filter orders
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+   ```bash
+   git clone [repository-url]
+   cd top-flight-health
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage Guide
 
-## Learn More
+### Shopping
+1. **Browse Products**
+   - Visit the Products page from the navigation menu
+   - Use filters and search to find specific products
+   - Click on products to view details
 
-To learn more about Next.js, take a look at the following resources:
+2. **Adding to Cart**
+   - Click "Add to Cart" on any product
+   - View cart by clicking the cart icon in the navigation
+   - Adjust quantities or remove items in the cart page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Checkout**
+   - Review your cart
+   - Click "Proceed to Checkout"
+   - Fill in shipping information
+   - Confirm order
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Provider Portal
+1. **Access**
+   - Click "Provider Portal" in the navigation
+   - Enter any email and password combination to log in (Demo Mode)
+   - Example: 
+     - Email: test@example.com
+     - Password: password123
 
-## Deploy on Vercel
+2. **Managing Orders**
+   - View all orders in the dashboard
+   - Update order status
+   - Search for specific orders
+   - Filter orders by status or date
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# tf-health
+- Next.js 14
+- React
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+- Local Storage for data persistence
+
+## Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
