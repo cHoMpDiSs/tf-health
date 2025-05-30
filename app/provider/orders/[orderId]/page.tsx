@@ -148,7 +148,7 @@ export default function OrderDetailPage() {
         </Button>
         <div className="text-center py-12">
           <h2 className="text-2xl font-bold mb-2">Order Not Found</h2>
-          <p className="text-muted-foreground">The order you're looking for doesn't exist.</p>
+          <p className="text-muted-foreground">The order you&apos;re looking for doesn&apos;t exist.</p>
         </div>
       </div>
     );

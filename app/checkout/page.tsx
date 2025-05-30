@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -29,6 +29,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [shippingDetails, setShippingDetails] = useState<ShippingDetails>({
     firstName: '',
     lastName: '',
@@ -39,6 +40,10 @@ export default function CheckoutPage() {
     zipCode: '',
     phone: '',
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
   const shipping = 5.99;
@@ -92,9 +97,11 @@ export default function CheckoutPage() {
         status: 'ordered'
       };
 
-      // Save order to localStorage for demo purposes
-      const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-      localStorage.setItem('orders', JSON.stringify([...existingOrders, order]));
+      // Save order to localStorage
+      if (typeof window !== 'undefined') {
+        const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+        localStorage.setItem('orders', JSON.stringify([...existingOrders, order]));
+      }
 
       // Show success toast
       toast({
@@ -108,8 +115,8 @@ export default function CheckoutPage() {
       // Clear cart
       clearCart();
 
-      // Use window.location for a full page navigation
-      window.location.href = `/checkout/${orderId}/receipt`;
+      // Use Next.js router for navigation
+      router.push(`/checkout/${orderId}/receipt`);
     } catch (error) {
       toast({
         title: "Error processing order",
@@ -120,6 +127,11 @@ export default function CheckoutPage() {
       setIsRedirecting(false);
     }
   };
+
+  // Don't render anything until mounted (client-side)
+  if (!mounted) {
+    return null;
+  }
 
   if (isRedirecting) {
     return (
@@ -245,25 +257,25 @@ export default function CheckoutPage() {
                   <div key={item.id} className="flex justify-between">
                     <div>
                       <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
+                      <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
                     </div>
                     <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
-                <div className="border-t pt-4 space-y-2">
+                <div className="border-t pt-4 mt-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-sm mt-2">
                     <span className="text-muted-foreground">Shipping</span>
                     <span>${shipping.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">CA Sales Tax (7.25%)</span>
+                  <div className="flex justify-between text-sm mt-2">
+                    <span className="text-muted-foreground">Tax</span>
                     <span>${tax.toFixed(2)}</span>
                   </div>
-                  <div className="border-t pt-2 flex justify-between font-semibold">
+                  <div className="flex justify-between font-medium text-lg mt-4 pt-4 border-t">
                     <span>Total</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
@@ -272,19 +284,18 @@ export default function CheckoutPage() {
             </CardContent>
           </Card>
 
-          <Button 
-            type="submit" 
-            className="w-full" 
-            size="lg"
+          <Button
+            type="submit"
+            className="w-full"
             disabled={isProcessing || !isFormValid()}
           >
             {isProcessing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Processing Payment...
+                Processing...
               </>
             ) : (
-              `Pay $${total.toFixed(2)}`
+              'Place Order'
             )}
           </Button>
         </div>
